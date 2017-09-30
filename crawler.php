@@ -38,12 +38,14 @@ shell_exec("curl -s --user 'api:$mailgun_api' \
 # loads domains from db
 $ergebnis = mysqli_query($db, "SELECT domain, $last_update_isp, $zensur_status_isp FROM domains");
 
+# time
+$timestamp = time();
+$heute = date("Y-m-d",$timestamp);
+$vorgestern = date('Y-m-d',strtotime($heute . "-2 days"));
+
 # checks domains for censorship and write back to db
 while($row = mysqli_fetch_object($ergebnis))
   {
-    $timestamp = time();
-    $heute = date("Y-m-d",$timestamp);
-    $vorgestern = date('Y-m-d',strtotime($heute . "-2 days"));
 
     if ($vorgestern  > $row->$last_update_isp) #
     {
