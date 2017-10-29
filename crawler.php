@@ -49,7 +49,8 @@ while($row = mysqli_fetch_object($result))
 
     if ($yesterday  > $row->$last_update_isp) #
     {
-      $dnscheck = shell_exec("dig " . escapeshellarg("+short @$dns_server $row->domain"));
+
+      $dnscheck = shell_exec(escapeshellcmd("dig +short @$dns_server $row->domain"));
       if ($dnscheck == "$ip_kipo\n") {
         $determined_censoring_state = "2";
 
